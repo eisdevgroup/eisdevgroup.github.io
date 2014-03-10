@@ -1,11 +1,12 @@
 
-http://username.github.io/archive.html
-http://username.github.io/sitemap.txt
-http://username.github.io/pages.html
-http://username.github.io/index.html
-http://username.github.io/atom.xml
-http://username.github.io/categories.html
-http://username.github.io/rss.xml
-http://username.github.io/tags.html
+/archive.html
+/sitemap.txt
+/pages.html
+/index.html
+/blog.html
+/atom.xml
+/categories.html
+/rss.xml
+/tags.html
 
-http://username.github.io/lessons/2011/12/29/jekyll-introduction
+/play%20framework/2014/03/10/leverage-browser-caching

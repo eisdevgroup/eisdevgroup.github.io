@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Leverage browser caching</title>
+    <meta name="description" content="Увеличиваем время жизни кэша статитики в браузере">
+    <meta name="author" content="EIS devteam">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">EIS Development Team Blog</a>
+          <ul class="nav">
+            <li><a href="/index.html">Главная</a></li>
+            <li><a href="/blog.html">Блог</a></li>
+            <li><a href="/categories.html">Категории</a></li>
+            <li><a href="/tags.html">Тэги</a></li>
+            <li><a href="/archive.html">Архив</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Leverage browser caching </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>10 March 2014</span>
+    </div>
+    <div class="content">
+      <h3 id="______">Увеличиваем время жизни кэша статитики в браузере</h3>
+
+<p>В качестве первого поста в нашем блоге, небольщой набросок от нашего верстальщика.</p>
+
+<p>В ходе разработки одной из систем с использованием связки Scala + Play framework 2.2.0, было проведено профилирование web-интерфейса, которое показало, что по умолчанию время жизни кэша статических ресурсов всего один час. Что негативно сказывалось на производительности интерфейса и, что больше всего расстраивало руководителей проекта - на индексах производительности выдаваемых сторонними системами профилирования.</p>
+
+<p>Как выяснилось, решение данного вопроса было довольно простым - добавление в конфигурацию проекта (application.conf) параметра <code>assets.defaultCache=&quot;max-age=3600&quot;</code>, где 3600 - время жизни кэша в секундах (в нашем случае, мы ствили неделю, т.е. 604800)</p>
+
+<p>В заключение, хочется отметить, что в документации на сайте Play Framework, для данной ситуации приводится параметр: http.cacheControl, что справедливо для Play версии 1. Для фреймворка версии 2 и выше, рекомендуется использовать параметр описанный нами выше.</p>
+
+<p><a href="http://play.lighthouseapp.com/projects/82401/tickets/853-httpcachecontrol-property-has-no-effect">Источник информации</a></p>
+    </div>
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#play framework-ref">
+    		play framework <span>1</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#play-ref">play <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#front-end-ref">front-end <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#optimization-ref">optimization <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev disabled"><a>&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next disabled"><a>Next &rarr;</a>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; 2014 EIS devteam
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

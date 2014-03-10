@@ -1,46 +1,26 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: Главная
+header: Добро пожаловать!
+group: navigation
 ---
 {% include JB/setup %}
 
-Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
+###Вас оприветствует команда разработчиков компании EIS.
+Наша компания специализириуется на разработке сложных корпоративных систем.
+В своей ежедневной работе, мы используем такие технологии как:
 
-Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllbootstrap.com)
+- [Java](http://www.java.com/)<br/>
+- [Scala](http://www.scala-lang.org)<br/>
+- [Play Framework](http://www.playframework.com/)<br/>
+- [Redis](http://redis.io/)<br/>
+- [Memcached](http://memcached.org/)<br/>
 
-## Update Author Attributes
+и многие другие.
 
-In `_config.yml` remember to specify your own data:
-    
-    title : My Blog =)
-    
-    author :
-      name : Name Lastname
-      email : blah@email.test
-      github : username
-      twitter : username
+Так или иначе в процессе работы мы используем open-source разработки, и чтобы не только использовть наработки сообщества, но и делиться своими, мы решили завести аккаунт команды на GitHub.
 
-The theme should reference these variables whenever needed.
-    
-## Sample Posts
+В рамках данного блога, мы будм писать о различных ситуациях и путях их решения, с которыми мы столкнулись в процессе работы.
+В нашем репозитории github, Вы сможете найти open-source решения, от наших программистов.
 
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
-
-    $ rm -rf _posts/core-samples
-
-Here's a sample "posts list".
-
-<ul class="posts">
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
-  {% endfor %}
-</ul>
-
-## To-Do
-
-This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.
-
-
+###[Добро пожаловать в наш блог](blog.html)
