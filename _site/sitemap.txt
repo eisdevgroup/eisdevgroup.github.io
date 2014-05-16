@@ -1,12 +1,13 @@
 
-/archive.html
-/sitemap.txt
-/pages.html
 /index.html
 /blog.html
 /atom.xml
 /categories.html
-/rss.xml
 /tags.html
+/sitemap.txt
+/rss.xml
+/archive.html
+/pages.html
 
+/code%20quality/2014/05/16/code-quality-tools-in-scala-projects
 /play%20framework/2014/03/10/leverage-browser-caching

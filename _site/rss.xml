@@ -5,10 +5,18 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-03-10T15:19:27+04:00</lastBuildDate>
-        <pubDate>2014-03-10T15:19:27+04:00</pubDate>
+        <lastBuildDate>2014-05-16T12:28:05+04:00</lastBuildDate>
+        <pubDate>2014-05-16T12:28:05+04:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Code quality tools in Scala projects</title>
+                <description>&lt;h1 id=&quot;_______scala&quot;&gt;Инструменты улучшения качества кода в проектах на Scala&lt;/h1&gt;</description>
+                <link>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</link>
+                <guid>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</guid>
+                <pubDate>2014-05-16T00:00:00+04:00</pubDate>
+        </item>
 
         <item>
                 <title>Leverage browser caching</title>
