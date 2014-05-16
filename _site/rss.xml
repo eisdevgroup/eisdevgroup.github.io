@@ -5,68 +5,70 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-05-16T14:09:09+04:00</lastBuildDate>
-        <pubDate>2014-05-16T14:09:09+04:00</pubDate>
+        <lastBuildDate>2014-05-16T17:22:08+04:00</lastBuildDate>
+        <pubDate>2014-05-16T17:22:08+04:00</pubDate>
         <ttl>1800</ttl>
 
 
         <item>
                 <title>Code quality tools in Scala projects</title>
-                <description>&lt;h2 id=&quot;_______scala&quot;&gt;Инструменты улучшения качества кода в проектах на Scala&lt;/h2&gt;
+                <description>
+&lt;h2 id=&quot;scala&quot;&gt;Инструменты улучшения качества кода в проектах на Scala&lt;/h2&gt;
 
-&lt;p&gt;Мы занимаемся разработкой на Scala уже порядка года и за это время накопили некоторый инструментарий, чтобы следить за качеством кода, который мы пишем. В этой статье я постараюсь описать эти инструменты и как мы их используем.&lt;/p&gt;
+&lt;p&gt;Мы занимаемся разработкой на Scala уже порядка года и за это время накопили некоторый инструментарий, чтобы следить за качеством кода, который мы пишем.
+В этой статье я постараюсь описать эти инструменты и как мы их используем.&lt;/p&gt;
 
-&lt;h3 id=&quot;&quot;&gt;Инструменты&lt;/h3&gt;
+&lt;h3 id=&quot;section&quot;&gt;Инструменты&lt;/h3&gt;
 
-&lt;p&gt;На данный момет мы используем 3 инструмента:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Linter - производит статический анализатор кода;&lt;/li&gt;
-
-&lt;li&gt;ScalaStyle - производит анализ исходных кодов на предмет соответствия стандарту и прнципам написания кода;&lt;/li&gt;
-
-&lt;li&gt;JaCoCo - производит оценку покрытия кода тестами.&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;На данный момет мы используем 3 инструмента:
+1. Linter - производит статический анализатор кода;
+2. ScalaStyle - производит анализ исходных кодов на предмет соответствия стандарту и прнципам написания кода;
+3. JaCoCo - производит оценку покрытия кода тестами.&lt;/p&gt;
 
 &lt;p&gt;Ссылки на инструменты приведены в &lt;a href=&quot;#links&quot;&gt;последнем разделе поста&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;linter&quot;&gt;Linter&lt;/h3&gt;
 
-&lt;p&gt;linter был первым инструментом, который мы включили в проекты. Да, сообщения scalac и sbt гораздо более информативны и полезны, чем сообщения javac и maven, однако они не позволяют отследить некоторые неприятные моменты в коде. linter же позволяет отследить участки кода, возможно содержащие ошибки - например места в коде с использованием небезопасных сравнений.&lt;/p&gt;
+&lt;p&gt;linter был первым инструментом, который мы включили в проекты.
+Да, сообщения scalac и sbt гораздо более информативны и полезны, чем сообщения javac и maven, однако они не позволяют отследить некоторые неприятные моменты в коде.
+linter же позволяет отследить участки кода, возможно содержащие ошибки - например места в коде с использованием небезопасных сравнений.&lt;/p&gt;
 
 &lt;p&gt;В итоге уже в первую неделю использования linter позволил вычистить большую часть базу кода от подобных опасных выражений и иcправить некоторые замаскированные баги.&lt;/p&gt;
 
 &lt;h3 id=&quot;scalastyle&quot;&gt;ScalaStyle&lt;/h3&gt;
 
-&lt;p&gt;ScalaStyle помогает нам следовать стандарту и рекомендациям написания кода на Scala. Это оптимизированный для Scala наследник CodeStyle, разработанного для Java. После превой проверки кода мы получили огромное количество предупреждений - как безобидных, вроде превышения длины строки кода, так и более неприятных, например магических чисел в коде. Отчасти в подобных результатах проверки виновата официальная документация PlayFramework, например &lt;a href=&quot;http://www.playframework.com/documentation/2.3.x/ScalaActions&quot;&gt;здесь&lt;/a&gt; не указываются возвращаемые типы для публичных методов. Но всетаки большую часть ошибок в оформлении кода допустили мы сами.&lt;/p&gt;
+&lt;p&gt;ScalaStyle помогает нам следовать стандарту и рекомендациям написания кода на Scala. Это оптимизированный для Scala наследник CodeStyle, разработанного для Java.
+После превой проверки кода мы получили огромное количество предупреждений - как безобидных, вроде превышения длины строки кода, так и более неприятных, например магических чисел в коде.
+Отчасти в подобных результатах проверки виновата официальная документация PlayFramework, например &lt;a href=&quot;http://www.playframework.com/documentation/2.3.x/ScalaActions&quot;&gt;здесь&lt;/a&gt; не указываются возвращаемые типы для публичных методов.
+Но всетаки большую часть ошибок в оформлении кода допустили мы сами.&lt;/p&gt;
 
 &lt;p&gt;Теперь мы более внимательно следим за тем, как мы пишем, и ScalaStyle нам в этом помогает.&lt;/p&gt;
 
 &lt;h3 id=&quot;jacoco&quot;&gt;JaCoCo&lt;/h3&gt;
 
-&lt;p&gt;В сети доступно несколько вариантов со своими приемуществами и недостатками (например &lt;a href=&quot;http://mtkopone.github.io/scct/&quot;&gt;scct&lt;/a&gt;, &lt;a href=&quot;http://scoverage.org/&quot;&gt;scoverage&lt;/a&gt; ). Мы остановились на JaCoCo по причине наличия плагина для Jenkins и удобной конфигурации.&lt;/p&gt;
+&lt;p&gt;В сети доступно несколько вариантов со своими приемуществами и недостатками (например &lt;a href=&quot;http://mtkopone.github.io/scct/&quot;&gt;scct&lt;/a&gt;, &lt;a href=&quot;http://scoverage.org/&quot;&gt;scoverage&lt;/a&gt; ).
+Мы остановились на JaCoCo по причине наличия плагина для Jenkins и удобной конфигурации.&lt;/p&gt;
 
-&lt;h3 id=&quot;__&quot;&gt;Все в сборе&lt;/h3&gt;
+&lt;h3 id=&quot;section-1&quot;&gt;Все в сборе&lt;/h3&gt;
 
-&lt;p&gt;Чтобы можно было в любой момент получить отчет о результатах проверок кода проектов, мы внедрили процесс проверки в сборку проектов. В качестве инструмента &lt;a href=&quot;http://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%BF%D1%80%D0%B5%D1%80%D1%8B%D0%B2%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F&quot;&gt;CI&lt;/a&gt; мы используем &lt;a href=&quot;&quot;&gt;Jenkins&lt;/a&gt; После заливки изменнений в коде в центральный репозиторий Jenkins запускает тесты и отдельно запускает проверку стилистики кода, после чего производится сбор статистики и формирование графиков и таблиц.&lt;/p&gt;
+&lt;p&gt;Чтобы можно было в любой момент получить отчет о результатах проверок кода проектов, мы внедрили процесс проверки в сборку проектов.
+В качестве инструмента &lt;a href=&quot;http://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%BF%D1%80%D0%B5%D1%80%D1%8B%D0%B2%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F&quot;&gt;CI&lt;/a&gt; мы используем &lt;a href=&quot;&quot;&gt;Jenkins&lt;/a&gt;
+После заливки изменнений в коде в центральный репозиторий Jenkins запускает тесты и отдельно запускает проверку стилистики кода, после чего производится сбор статистики и формирование графиков и таблиц.&lt;/p&gt;
 
-&lt;p&gt;Статический анализ мы проводим при каждой сборке, как на сервере Jenkins, так и локально на разработческих машинах. Время компиляции увеличивается несущественно, а разработчик сразу получает полезную информацию. Кроме того разработчик не забывает провести проверку перед отправкой кода в центральный репозиторий, например.&lt;/p&gt;
+&lt;p&gt;Статический анализ мы проводим при каждой сборке, как на сервере Jenkins, так и локально на разработческих машинах. Время компиляции увеличивается несущественно, а разработчик сразу получает полезную информацию.
+Кроме того разработчик не забывает провести проверку перед отправкой кода в центральный репозиторий, например.&lt;/p&gt;
 
-&lt;h3 id=&quot;_&quot;&gt;Полезные ссылки&lt;a name=&#39;links&#39; /&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;a-namelinksa&quot;&gt;Полезные ссылки&lt;a name=&quot;links&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/HairyFotr/linter&quot;&gt;Linter&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;http://www.scalastyle.org/&quot;&gt;ScalaStyle&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;http://www.eclemma.org/jacoco/&quot;&gt;JaCoCo&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;https://github.com/sbt/jacoco4sbt&quot;&gt;JaCoCo sbt plugin&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/Checkstyle+Plugin&quot;&gt;Jenkins Checkstyle plugin&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin&quot;&gt;Jenkins JaCoCo plugin&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+  &lt;li&gt;&lt;a href=&quot;https://github.com/HairyFotr/linter&quot;&gt;Linter&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.scalastyle.org/&quot;&gt;ScalaStyle&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.eclemma.org/jacoco/&quot;&gt;JaCoCo&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/sbt/jacoco4sbt&quot;&gt;JaCoCo sbt plugin&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/Checkstyle+Plugin&quot;&gt;Jenkins Checkstyle plugin&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin&quot;&gt;Jenkins JaCoCo plugin&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
                 <link>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</link>
                 <guid>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</guid>
                 <pubDate>2014-05-16T00:00:00+04:00</pubDate>
@@ -74,17 +76,20 @@
 
         <item>
                 <title>Leverage browser caching</title>
-                <description>&lt;h3 id=&quot;______&quot;&gt;Увеличиваем время жизни кэша статитики в браузере&lt;/h3&gt;
+                <description>
+&lt;h3 id=&quot;section&quot;&gt;Увеличиваем время жизни кэша статитики в браузере&lt;/h3&gt;
 
 &lt;p&gt;В качестве первого поста в нашем блоге, небольщой набросок от нашего верстальщика.&lt;/p&gt;
 
 &lt;p&gt;В ходе разработки одной из систем с использованием связки Scala + Play framework 2.2.0, было проведено профилирование web-интерфейса, которое показало, что по умолчанию время жизни кэша статических ресурсов всего один час. Что негативно сказывалось на производительности интерфейса и, что больше всего расстраивало руководителей проекта - на индексах производительности выдаваемых сторонними системами профилирования.&lt;/p&gt;
 
-&lt;p&gt;Как выяснилось, решение данного вопроса было довольно простым - добавление в конфигурацию проекта (application.conf) параметра &lt;code&gt;assets.defaultCache=&amp;quot;max-age=3600&amp;quot;&lt;/code&gt;, где 3600 - время жизни кэша в секундах (в нашем случае, мы ствили неделю, т.е. 604800)&lt;/p&gt;
+&lt;p&gt;Как выяснилось, решение данного вопроса было довольно простым - добавление в конфигурацию проекта (application.conf) параметра
+&lt;code&gt;assets.defaultCache=&quot;max-age=3600&quot;&lt;/code&gt;, где 3600 - время жизни кэша в секундах (в нашем случае, мы ствили неделю, т.е. 604800)&lt;/p&gt;
 
 &lt;p&gt;В заключение, хочется отметить, что в документации на сайте Play Framework, для данной ситуации приводится параметр: http.cacheControl, что справедливо для Play версии 1. Для фреймворка версии 2 и выше, рекомендуется использовать параметр описанный нами выше.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://play.lighthouseapp.com/projects/82401/tickets/853-httpcachecontrol-property-has-no-effect&quot;&gt;Источник информации&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;a href=&quot;http://play.lighthouseapp.com/projects/82401/tickets/853-httpcachecontrol-property-has-no-effect&quot;&gt;Источник информации&lt;/a&gt;&lt;/p&gt;
+</description>
                 <link>/play%20framework/2014/03/10/leverage-browser-caching</link>
                 <guid>/play%20framework/2014/03/10/leverage-browser-caching</guid>
                 <pubDate>2014-03-10T00:00:00+04:00</pubDate>
