@@ -5,14 +5,60 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-05-16T12:28:05+04:00</lastBuildDate>
-        <pubDate>2014-05-16T12:28:05+04:00</pubDate>
+        <lastBuildDate>2014-05-16T13:43:29+04:00</lastBuildDate>
+        <pubDate>2014-05-16T13:43:29+04:00</pubDate>
         <ttl>1800</ttl>
 
 
         <item>
                 <title>Code quality tools in Scala projects</title>
-                <description>&lt;h1 id=&quot;_______scala&quot;&gt;Инструменты улучшения качества кода в проектах на Scala&lt;/h1&gt;</description>
+                <description>&lt;h2 id=&quot;_______scala&quot;&gt;Инструменты улучшения качества кода в проектах на Scala&lt;/h2&gt;
+
+&lt;p&gt;Мы занимаемся разработкой на Scala уже порядка года и за это время накопили некоторый инструментарий, чтобы следить за качеством кода, который мы пишем. В этой статье я постараюсь описать эти инструменты и как мы их используем.&lt;/p&gt;
+
+&lt;h3 id=&quot;&quot;&gt;Инструменты&lt;/h3&gt;
+
+&lt;p&gt;На данный момет мы используем 3 инструмента:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Linter - производит статический анализатор кода;&lt;/li&gt;
+
+&lt;li&gt;ScalaStyle - производит анализ исходных кодов на предмет соответствия стандарту и прнципам написания кода;&lt;/li&gt;
+
+&lt;li&gt;JaCoCo - производит оценку покрытия кода тестами.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Ссылки на инструменты приведены в &lt;a href=&quot;#links&quot;&gt;последнем разделе поста&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;linter&quot;&gt;Linter&lt;/h3&gt;
+
+&lt;p&gt;linter был первым инструментом, который мы включили в проекты. Да, сообщения scalac и sbt гораздо более информативны и полезны, чем сообщения javac и maven, однако они не позволяют отследить некоторые неприятные моменты в коде. linter же позволяет отследить участки кода, возможно содержащие ошибки - например места в коде с использованием небезопасных сравнений.&lt;/p&gt;
+
+&lt;p&gt;В итоге уже в первую неделю использования linter позволил вычистить большую часть базу кода от подобных опасных выражений и иcправить некоторые замаскированные баги.&lt;/p&gt;
+
+&lt;h3 id=&quot;scalastyle&quot;&gt;ScalaStyle&lt;/h3&gt;
+
+&lt;p&gt;ScalaStyle помогает нам следовать стандарту и рекомендациям написания кода на Scala. Это оптимизированный для Scala наследник CodeStyle, разработанного для Java. После превой проверки кода мы получили огромное количество предупреждений - как безобидных, вроде превышения длины строки кода, так и более неприятных, например магических чисел в коде. Отчасти в подобных результатах проверки виновата официальная документация PlayFramework, например &lt;a href=&quot;http://www.playframework.com/documentation/2.3.x/ScalaActions&quot;&gt;здесь&lt;/a&gt; не указываются возвращаемые типы для публичных методов. Но всетаки большую часть ошибок в оформлении кода допустили мы сами.&lt;/p&gt;
+
+&lt;p&gt;Теперь мы более внимательно следим за тем, как мы пишем, и ScalaStyle нам в этом помогает.&lt;/p&gt;
+
+&lt;h3 id=&quot;jacoco&quot;&gt;JaCoCo&lt;/h3&gt;
+
+&lt;h3 id=&quot;_&quot;&gt;Полезные ссылки&lt;a name=&#39;links&#39; /&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/HairyFotr/linter&quot;&gt;Linter&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;http://www.scalastyle.org/&quot;&gt;ScalaStyle&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;http://www.eclemma.org/jacoco/&quot;&gt;JaCoCo&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;https://github.com/sbt/jacoco4sbt&quot;&gt;JaCoCo sbt plugin&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/Checkstyle+Plugin&quot;&gt;Jenkins Checkstyle plugin&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin&quot;&gt;Jenkins JaCoCo plugin&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
                 <link>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</link>
                 <guid>/code%20quality/2014/05/16/code-quality-tools-in-scala-projects</guid>
                 <pubDate>2014-05-16T00:00:00+04:00</pubDate>
