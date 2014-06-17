@@ -1,13 +1,14 @@
 
-/index.html
-/blog.html
-/atom.xml
-/categories.html
-/tags.html
-/sitemap.txt
 /rss.xml
-/archive.html
+/sitemap.txt
 /pages.html
+/atom.xml
+/archive.html
+/tags.html
+/blog.html
+/index.html
+/categories.html
 
+/code%20quality/2014/06/17/play-with-pjax
 /code%20quality/2014/05/16/code-quality-tools-in-scala-projects
 /play%20framework/2014/03/10/leverage-browser-caching

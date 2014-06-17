@@ -5,10 +5,37 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-05-16T17:22:08+04:00</lastBuildDate>
-        <pubDate>2014-05-16T17:22:08+04:00</pubDate>
+        <lastBuildDate>2014-06-17T13:52:51+04:00</lastBuildDate>
+        <pubDate>2014-06-17T13:52:51+04:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Play with P-JAX</title>
+                <description>
+&lt;h2 id=&quot;p-jax&quot;&gt;P-JAX&lt;/h2&gt;
+
+&lt;p&gt;Давайте для начала разберемся, что такое P-JAX.&lt;/p&gt;
+
+&lt;p&gt;P-JAX представляет собой плагин для jQuery, позволяющий перезагружать участок web-страницы и при этом изменять состояние адресной строки браузера и историю посещения страниц.
+Проект открытый, исходный код доступен &lt;a href=&quot;https://github.com/defunkt/jquery-pjax&quot;&gt;на GitHub&lt;/a&gt;. Также доступно приложение, чтобы потестировать плагин, &lt;a href=&quot;http://pjax.heroku.com&quot;&gt;на Heroku&lt;/a&gt;.
+P-JAX используется самим GitHub.&lt;/p&gt;
+
+&lt;h3 id=&quot;p-jax-1&quot;&gt;Как работает P-JAX&lt;/h3&gt;
+
+&lt;p&gt;Название представляет собой объединенные 2 термина: PushState и AJAX.
+Магия технологии заключается в следующем:
+При нажатии на ссылку, для которой включен P-JAX, отпраляется AJAX запрос на сервер с указанием заголовка &lt;em&gt;X-PJAX: true&lt;/em&gt;.
+В это время значение в адресной строке браузера меняется на адрес в P-JAX-ссылке, а в истории посещений добавляется новая строка.
+После получения данных от сервера, P-JAX вырезает указанный участок web-страницы и вставляет туда участок полученный от сервера.&lt;/p&gt;
+
+&lt;p&gt;Такой подход позволяет существенно сократить время загрузки и отрисовки страницы.
+Минусом является необходимость обработки дополнительного заголовка на стороне сервера, чтобы определить передавать ли клиенту страницу целиком или только ее участок.&lt;/p&gt;
+</description>
+                <link>/code%20quality/2014/06/17/play-with-pjax</link>
+                <guid>/code%20quality/2014/06/17/play-with-pjax</guid>
+                <pubDate>2014-06-17T00:00:00+04:00</pubDate>
+        </item>
 
         <item>
                 <title>Code quality tools in Scala projects</title>
