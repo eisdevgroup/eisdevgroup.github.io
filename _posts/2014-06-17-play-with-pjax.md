@@ -26,114 +26,114 @@ P-JAX используется самим GitHub.
 Такой подход позволяет существенно сократить время загрузки и отрисовки страницы.
 Минусом является необходимость обработки дополнительного заголовка на стороне сервера, чтобы определить передавать ли клиенту страницу целиком или только ее участок.
 
-### Интеграция в Play-приложение
+## Интеграция в Play-приложение
 
-#### Подключаем P-JAX на страницу
+### Подключаем P-JAX на страницу
 
 Для подключения надстройки потребуется добавить jQuery и сам P-JAX
 
-```
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="@controllers.routes.Assets.at("javascripts/jquery.pjax.js")"></script>
-```
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="@controllers.routes.Assets.at("javascripts/jquery.pjax.js")"></script>
+
 
 Далее необходимо настроить P-JAX, для этого добавим скрипт:
 
-```
-<script type="text/javascript">
-$(document).pjax("a[data-pjax="true"]", "#pjax-container", {timeout: 5000, push: true});
-</script>
-```
+
+    <script type="text/javascript">
+    $(document).pjax("a[data-pjax="true"]", "#pjax-container", {timeout: 5000, push: true});
+    </script>
+
 
 Теперь все ссылки с атрибутом _data-pjax="true"_ будут перезагружать содержимое элемента с id _pjax-container_.
 Теперь необходимо позаботиться о формах. Для этого добавим следующее:
 
-```
-$(document).on("submit", "form", function(event) {
-    $.pjax.submit(event, "#pjax-container", {timeout: 5000, push: true})
-});
-```
 
-#### Обрабатываем P-JAX на сервере
+    $(document).on("submit", "form", function(event) {
+        $.pjax.submit(event, "#pjax-container", {timeout: 5000, push: true})
+    });
+
+
+### Обрабатываем P-JAX на сервере
 
 На сервере необходимо разобрать запрос и получить значение заголовка _X-PJAX_ и, в зависимости от него, отправить HTML-представление целиком или частично.
 Для этого можно использовать следующий метод
 
-```
-object PjaxController extends Controller {
 
-  protected val pjaxHeader = "X-PJAX"
-  protected val defaultValue = "false"
-  protected val pjaxUrlHeader = "X-PJAX-URL"
+    object PjaxController extends Controller {
 
-  def status : EssentialAction = Action {
-    implicit request =>
-      val renderFullView = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue).toBoolean
-      Ok(view(renderFullView))
-  }
+      protected val pjaxHeader = "X-PJAX"
+      protected val defaultValue = "false"
+      protected val pjaxUrlHeader = "X-PJAX-URL"
 
-}
-```
+      def status : EssentialAction = Action {
+        implicit request =>
+          val renderFullView = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue).toBoolean
+          Ok(view(renderFullView))
+      }
+
+    }
+
 
 В файл с базовым шаблоном (_layout_) необходимо поместить код управления отрисовкой статической части:
 
-```
-@(renderFullView: Boolean)(content: Html)(implicit request: RequestHeader)
 
-@if(renderFullView) {
-  <!DOCTYPE html>
-  <!-- full page -->
-  @content
-}else{
-  <!-- part of view -->
-  @content
-}
-```
+    @(renderFullView: Boolean)(content: Html)(implicit request: RequestHeader)
+
+    @if(renderFullView) {
+      <!DOCTYPE html>
+      <!-- full page -->
+      @content
+    }else{
+      <!-- part of view -->
+      @content
+    }
+
 
 Из представления необходимо передать параметр отрисовки в базовый шаблон.
 
-```
-@(renderFullView: Boolean)
 
-@views.html.layout(renderFullView) {
-  <!-- View content will be here.-->
-}
-```
+    @(renderFullView: Boolean)
 
-#### Подводные камни
+    @views.html.layout(renderFullView) {
+      <!-- View content will be here.-->
+    }
 
-1. Redirects
+
+### Подводные камни
+
+* Redirects
 
 По умолчанию P-JAX не будет менять адрес в адресной строке при перенаправлении. Для изменения значения необходимо явно указать какой URL необходимо вставить в адресную строку.
 
-```
- pjax_s = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue)
- Redirect(call).withHeaders((pjaxHeader, pjax_s), (pjaxUrlHeader, request.uri))
-```
 
-2. Подтверждение оперции
+    pjax_s = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue)
+    Redirect(call).withHeaders((pjaxHeader, pjax_s), (pjaxUrlHeader, request.uri))
+
+
+* Подтверждение оперции
 
 Если Вы хотите сделать диалог подтверждения, например при удалении элемента, необходимо воспользоваться событием _pjax:beforeSend_ и перехватить событие отправки запроса:
 
-```
-<script type="text/javascript">
-$(document).on("pjax:beforeSend", function(e) {
-    link = $(e.relatedTarget)
-    e.preventDefault()
-    e.stopImmediatePropagation()
-    // do something useful
-});
-</script>
-```
 
-3. JavaScript
+    <script type="text/javascript">
+        $(document).on("pjax:beforeSend", function(e) {
+            link = $(e.relatedTarget)
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            // do something useful
+        });
+    </script>
+
+
+* JavaScript
 
 При работе с JavaScript и P-JAX необходимо помнить, что фактически страница, с которой мы работаем одна. Весь JavaScript, единожды загруженный, будет храниться в памяти и выполняться.
 При этом могут возникать ошибки, связанные с повторной загрузкой скриптов или повторной привязкой событий, например _onClick_.
 
 Также необходимо помнить о дублировании кода инициализации событий при загрузке страницы и при срабатывании _pjax:complete_
 
-4. Работа с формами
+* Работа с формами
 
 При возврате ошибок в заполнении формы от сервера клиенту использование HTT-кодов ответов, отличных от 200-ой серии, опасно. По умолчанию такие ответы будут попадать в _error_-callback методов P-JAX и не будут приводить к перерисовке области.
 Решением может служить использование _OK_ вместо _BadRequest_ (хотя в примерах PlayFramework используется второе).
@@ -151,3 +151,6 @@ $(document).on("pjax:beforeSend", function(e) {
 
 ## Ссылки
 
+* [P-JAX плагин](https://github.com/defunkt/jquery-pjax)
+* [Приложение-пример P-JAX](http://pjax.heroku.com)
+* [Пример использования PJAX и Play](https://github.com/pvillega/pjax-Forms)

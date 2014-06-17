@@ -66,22 +66,153 @@
       
 <h2 id="p-jax">P-JAX</h2>
 
-<p>Давайте для начала разберемся, что такое P-JAX.</p>
+<h3 id="p-jax-1">Что такое P-JAX.</h3>
 
 <p>P-JAX представляет собой плагин для jQuery, позволяющий перезагружать участок web-страницы и при этом изменять состояние адресной строки браузера и историю посещения страниц.
 Проект открытый, исходный код доступен <a href="https://github.com/defunkt/jquery-pjax">на GitHub</a>. Также доступно приложение, чтобы потестировать плагин, <a href="http://pjax.heroku.com">на Heroku</a>.
 P-JAX используется самим GitHub.</p>
 
-<h3 id="p-jax-1">Как работает P-JAX</h3>
+<h3 id="p-jax-2">Как работает P-JAX</h3>
 
 <p>Название представляет собой объединенные 2 термина: PushState и AJAX.
 Магия технологии заключается в следующем:
-При нажатии на ссылку, для которой включен P-JAX, отпраляется AJAX запрос на сервер с указанием заголовка <em>X-PJAX: true</em>.
-В это время значение в адресной строке браузера меняется на адрес в P-JAX-ссылке, а в истории посещений добавляется новая строка.
-После получения данных от сервера, P-JAX вырезает указанный участок web-страницы и вставляет туда участок полученный от сервера.</p>
+* При нажатии на ссылку, для которой включен P-JAX, отпраляется AJAX запрос на сервер с указанием заголовка <em>X-PJAX: true</em>.
+* В это время значение в адресной строке браузера меняется на адрес в P-JAX-ссылке, а в истории посещений добавляется новая строка.
+* После получения данных от сервера, P-JAX вырезает указанный участок web-страницы и вставляет туда участок полученный от сервера.</p>
 
 <p>Такой подход позволяет существенно сократить время загрузки и отрисовки страницы.
 Минусом является необходимость обработки дополнительного заголовка на стороне сервера, чтобы определить передавать ли клиенту страницу целиком или только ее участок.</p>
+
+<h2 id="play-">Интеграция в Play-приложение</h2>
+
+<h3 id="p-jax--">Подключаем P-JAX на страницу</h3>
+
+<p>Для подключения надстройки потребуется добавить jQuery и сам P-JAX</p>
+
+<pre><code>&lt;script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="@controllers.routes.Assets.at("javascripts/jquery.pjax.js")"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Далее необходимо настроить P-JAX, для этого добавим скрипт:</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+$(document).pjax("a[data-pjax="true"]", "#pjax-container", {timeout: 5000, push: true});
+&lt;/script&gt;
+</code></pre>
+
+<p>Теперь все ссылки с атрибутом <em>data-pjax=”true”</em> будут перезагружать содержимое элемента с id <em>pjax-container</em>.
+Теперь необходимо позаботиться о формах. Для этого добавим следующее:</p>
+
+<pre><code>$(document).on("submit", "form", function(event) {
+    $.pjax.submit(event, "#pjax-container", {timeout: 5000, push: true})
+});
+</code></pre>
+
+<h3 id="p-jax---1">Обрабатываем P-JAX на сервере</h3>
+
+<p>На сервере необходимо разобрать запрос и получить значение заголовка <em>X-PJAX</em> и, в зависимости от него, отправить HTML-представление целиком или частично.
+Для этого можно использовать следующий метод</p>
+
+<pre><code>object PjaxController extends Controller {
+
+  protected val pjaxHeader = "X-PJAX"
+  protected val defaultValue = "false"
+  protected val pjaxUrlHeader = "X-PJAX-URL"
+
+  def status : EssentialAction = Action {
+    implicit request =&gt;
+      val renderFullView = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue).toBoolean
+      Ok(view(renderFullView))
+  }
+
+}
+</code></pre>
+
+<p>В файл с базовым шаблоном (<em>layout</em>) необходимо поместить код управления отрисовкой статической части:</p>
+
+<pre><code>@(renderFullView: Boolean)(content: Html)(implicit request: RequestHeader)
+
+@if(renderFullView) {
+  &lt;!DOCTYPE html&gt;
+  &lt;!-- full page --&gt;
+  @content
+}else{
+  &lt;!-- part of view --&gt;
+  @content
+}
+</code></pre>
+
+<p>Из представления необходимо передать параметр отрисовки в базовый шаблон.</p>
+
+<pre><code>@(renderFullView: Boolean)
+
+@views.html.layout(renderFullView) {
+  &lt;!-- View content will be here.--&gt;
+}
+</code></pre>
+
+<h3 id="section">Подводные камни</h3>
+
+<ul>
+  <li>Redirects</li>
+</ul>
+
+<p>По умолчанию P-JAX не будет менять адрес в адресной строке при перенаправлении. Для изменения значения необходимо явно указать какой URL необходимо вставить в адресную строку.</p>
+
+<pre><code>pjax_s = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue)
+Redirect(call).withHeaders((pjaxHeader, pjax_s), (pjaxUrlHeader, request.uri))
+</code></pre>
+
+<ul>
+  <li>Подтверждение оперции</li>
+</ul>
+
+<p>Если Вы хотите сделать диалог подтверждения, например при удалении элемента, необходимо воспользоваться событием <em>pjax:beforeSend</em> и перехватить событие отправки запроса:</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+    $(document).on("pjax:beforeSend", function(e) {
+        link = $(e.relatedTarget)
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        // do something useful
+    });
+&lt;/script&gt;
+</code></pre>
+
+<ul>
+  <li>JavaScript</li>
+</ul>
+
+<p>При работе с JavaScript и P-JAX необходимо помнить, что фактически страница, с которой мы работаем одна. Весь JavaScript, единожды загруженный, будет храниться в памяти и выполняться.
+При этом могут возникать ошибки, связанные с повторной загрузкой скриптов или повторной привязкой событий, например <em>onClick</em>.</p>
+
+<p>Также необходимо помнить о дублировании кода инициализации событий при загрузке страницы и при срабатывании <em>pjax:complete</em></p>
+
+<ul>
+  <li>Работа с формами</li>
+</ul>
+
+<p>При возврате ошибок в заполнении формы от сервера клиенту использование HTT-кодов ответов, отличных от 200-ой серии, опасно. По умолчанию такие ответы будут попадать в <em>error</em>-callback методов P-JAX и не будут приводить к перерисовке области.
+Решением может служить использование <em>OK</em> вместо <em>BadRequest</em> (хотя в примерах PlayFramework используется второе).</p>
+
+<h3 id="section-1">Выводы</h3>
+
+<p>Хотя P-JAX не очень распространен в сети, его использование позволяет существенно ускорить загрузку страниц Вашего web-приложения и тем самым улучшить UX.
+Для сравнения у нас загрузка страницы без P-JAX занимает 600-2500 мс, с P-JAX 100-300мс.
+Также плюсом можно считать неизменность привычного workflow при работе с web-страницами: мы также собираем html на сервере и не задействуем большое количество JavaScript на клиенте.</p>
+
+<p>Можно отметить следующие минусы:
+* увеличение количества кода и возможности ошибиться при обработке заголовков и в коде инициализации на клиенте
+* меньшая производительность относительно single-page клиентских фремворков (Angular, Ember, Backbone…)
+* меньшая или отсутствующая структуризация клиентского кода относительно single-page клиентских фремворков (Angular, Ember, Backbone…)</p>
+
+<h2 id="section-2">Ссылки</h2>
+
+<ul>
+  <li><a href="https://github.com/defunkt/jquery-pjax">P-JAX плагин</a></li>
+  <li><a href="http://pjax.heroku.com">Приложение-пример P-JAX</a></li>
+  <li><a href="https://github.com/pvillega/pjax-Forms">Пример использования PJAX и Play</a></li>
+</ul>
 
     </div>
 
