@@ -54,8 +54,51 @@ $(document).on("submit", "form", function(event) {
 });
 ```
 
-#### Обрабатываем P-JAX на вервере
+#### Обрабатываем P-JAX на сервере
 
+На сервере необходимо разобрать запрос и получить значение заголовка _X-PJAX_ и, в зависимости от него, отправить HTML-представление целиком или частично.
+Для этого можно использовать следующий метод
+
+```
+object PjaxController extends Controller {
+
+  protected val pjaxHeader = "X-PJAX"
+  protected val defaultValue = "false"
+  protected val pjaxUrlHeader = "X-PJAX-URL"
+
+  def status : EssentialAction = Action {
+    implicit request =>
+      val renderFullView = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue).toBoolean
+      Ok(view(renderFullView))
+  }
+
+}
+```
+
+В файл с базовым шаблоном (_layout_) необходимо поместить код управления отрисовкой статической части:
+
+```
+@(renderFullView: Boolean)(content: Html)(implicit request: RequestHeader)
+
+@if(renderFullView) {
+  <!DOCTYPE html>
+  <!-- full page -->
+  @content
+}else{
+  <!-- part of view -->
+  @content
+}
+```
+
+Из представления необходимо передать параметр отрисовки в базовый шаблон.
+
+```
+@(renderFullView: Boolean)
+
+@views.html.layout(renderFullView) {
+  <!-- View content will be here.-->
+}
+```
 
 
 
