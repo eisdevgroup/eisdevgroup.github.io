@@ -1,13 +1,13 @@
 
+/archive.html
+/atom.xml
+/blog.html
+/categories.html
+/index.html
+/pages.html
 /rss.xml
 /sitemap.txt
-/pages.html
-/atom.xml
-/archive.html
 /tags.html
-/blog.html
-/index.html
-/categories.html
 
 /code%20quality/2014/06/17/play-with-pjax
 /code%20quality/2014/05/16/code-quality-tools-in-scala-projects

@@ -33,34 +33,34 @@ P-JAX используется самим GitHub.
 
 Для подключения надстройки потребуется добавить jQuery и сам P-JAX
 
-
+{% highlight html %}
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="@controllers.routes.Assets.at("javascripts/jquery.pjax.js")"></script>
-
+{% endhighlight %}
 
 Далее необходимо настроить P-JAX, для этого добавим скрипт:
 
-
+{% highlight html %}
     <script type="text/javascript">
-    $(document).pjax("a[data-pjax="true"]", "#pjax-container", {timeout: 5000, push: true});
+        $(document).pjax("a[data-pjax="true"]", "#pjax-container", {timeout: 5000, push: true});
     </script>
-
+{% endhighlight %}
 
 Теперь все ссылки с атрибутом _data-pjax="true"_ будут перезагружать содержимое элемента с id _pjax-container_.
 Теперь необходимо позаботиться о формах. Для этого добавим следующее:
 
-
+{% highlight javascript %}
     $(document).on("submit", "form", function(event) {
         $.pjax.submit(event, "#pjax-container", {timeout: 5000, push: true})
     });
-
+{% endhighlight %}
 
 ### Обрабатываем P-JAX на сервере
 
 На сервере необходимо разобрать запрос и получить значение заголовка _X-PJAX_ и, в зависимости от него, отправить HTML-представление целиком или частично.
 Для этого можно использовать следующий метод
 
-
+{% highlight scala %}
     object PjaxController extends Controller {
 
       protected val pjaxHeader = "X-PJAX"
@@ -74,11 +74,11 @@ P-JAX используется самим GitHub.
       }
 
     }
-
+{% endhighlight %}
 
 В файл с базовым шаблоном (_layout_) необходимо поместить код управления отрисовкой статической части:
 
-
+{% highlight scala %}
     @(renderFullView: Boolean)(content: Html)(implicit request: RequestHeader)
 
     @if(renderFullView) {
@@ -89,17 +89,17 @@ P-JAX используется самим GitHub.
       <!-- part of view -->
       @content
     }
-
+{% endhighlight %}
 
 Из представления необходимо передать параметр отрисовки в базовый шаблон.
 
-
+{% highlight scala %}
     @(renderFullView: Boolean)
 
     @views.html.layout(renderFullView) {
       <!-- View content will be here.-->
     }
-
+{% endhighlight %}
 
 ### Подводные камни
 
@@ -107,16 +107,16 @@ P-JAX используется самим GitHub.
 
 По умолчанию P-JAX не будет менять адрес в адресной строке при перенаправлении. Для изменения значения необходимо явно указать какой URL необходимо вставить в адресную строку.
 
-
+{% highlight scala %}
     pjax_s = request.headers.toSimpleMap.getOrElse(pjaxHeader, defaultValue)
     Redirect(call).withHeaders((pjaxHeader, pjax_s), (pjaxUrlHeader, request.uri))
-
+{% endhighlight %}
 
 * Подтверждение оперции
 
 Если Вы хотите сделать диалог подтверждения, например при удалении элемента, необходимо воспользоваться событием _pjax:beforeSend_ и перехватить событие отправки запроса:
 
-
+{% highlight html %}
     <script type="text/javascript">
         $(document).on("pjax:beforeSend", function(e) {
             link = $(e.relatedTarget)
@@ -125,7 +125,7 @@ P-JAX используется самим GitHub.
             // do something useful
         });
     </script>
-
+{% endhighlight %}
 
 * JavaScript
 
