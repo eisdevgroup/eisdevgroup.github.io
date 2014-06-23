@@ -2,7 +2,7 @@
 layout: post
 title: "Play with P-JAX"
 description: "Play и P-JAX"
-category: code quality
+category: Play framework
 tags: [play, front-end]
 ---
 {% include JB/setup %}
