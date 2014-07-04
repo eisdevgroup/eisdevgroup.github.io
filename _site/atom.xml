@@ -4,7 +4,7 @@
  <title>EIS Development Team Blog</title>
  <link href="/" rel="self"/>
  <link href=""/>
- <updated>2014-07-01T21:21:27+04:00</updated>
+ <updated>2014-07-04T17:08:58+04:00</updated>
  <id></id>
  <author>
    <name>EIS devteam</name>
@@ -13,10 +13,25 @@
 
  
  <entry>
+   <title>AzureJay</title>
+   <link href="/play%20framework/2014/07/04/azurejay"/>
+   <updated>2014-07-04T00:00:00+04:00</updated>
+   <id>/play%20framework/2014/07/04/azurejay</id>
+   <content type="html">
+&lt;p&gt;Сегодня в нашем репозитории на Github появился наш первый проект с открытым исходным кодом!&lt;/p&gt;
+
+&lt;p&gt;Проект представляет собой дополнение для PlayFramework 2, предназначенное для связи серверного приложения и мобильной службы MS Azure.
+Библиотека пока очень маленькая и содержит большое количество ограничений, но бы обещаем развивать ее.&lt;/p&gt;
+
+&lt;p&gt;Подробнее Вы можете ознакомиться с проектом &lt;a href=&quot;https://github.com/eisdevgroup/AzureJay&quot;&gt;здесь&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Play with P-JAX</title>
-   <link href="/code%20quality/2014/06/17/play-with-pjax"/>
+   <link href="/play%20framework/2014/06/17/play-with-pjax"/>
    <updated>2014-06-17T00:00:00+04:00</updated>
-   <id>/code%20quality/2014/06/17/play-with-pjax</id>
+   <id>/play%20framework/2014/06/17/play-with-pjax</id>
    <content type="html">
 &lt;h2 id=&quot;p-jax&quot;&gt;P-JAX&lt;/h2&gt;
 
