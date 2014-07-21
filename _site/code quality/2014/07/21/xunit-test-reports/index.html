@@ -69,6 +69,55 @@
     </div>
     <div class="content">
       
+<h2 id="xunit">Отчеты о прохождении тестов в формате xUnit</h2>
+
+<h3 id="jenkins">Отчеты и Jenkins</h3>
+
+<p>Для Jenkins существует <a href="https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin">плагин</a>, разбирающий отчеты в формает xUnit. XML-отчет преобразуется в таблицу соответствия тестов и результатов.
+Кроме того плагин позволяет отследить динамику прохождения тестов и их количества в виде графиков и таблицы на странице задачи Jenkins (сколько тестов добавлено в последней сборке, сколько тестов сломалось за последний месяц,…).
+Визуализация отчетов позволяет быстрее локализовать место возможной ошибки и исправить ее (или тест).</p>
+
+<h3 id="xunit--playframework">xUnit и PlayFramework</h3>
+
+<p>К сожалению при настройках по умолчанию при прохождении тестов в PlayFramework xUnit отчет не создается, а формат отчета не совпадает с xUnit. В официальной документации на сайте информации о создании подобных отчетов нет.</p>
+
+<p>Однако, в действительности, отчет в формате xUnit создать можно. Как оказалось эта возможность заложена в sbt.
+Для создания отчетов необходимо добавить следующий ключ в скрипт сборки в <em>Build.scala</em>:</p>
+
+<pre><code>testOptions in Test += Tests.Argument("junitxml", "console")
+</code></pre>
+
+<p>При следующем выполнении команды <em>sbt test</em> будет создан файл отчета в папке <em>$PROJECT/target/test-reports</em>.</p>
+
+<p>Остается установить плагин для Jenkins и добавть послесборочный шаг публикации отчетов JUnit.</p>
+
+<h3 id="xunit--jacoco">xUnit и Jacoco</h3>
+
+<p>Если Вы используете jacoco4sbt для сборки статистики покрытия тестов, то обнаружите, что XML отчет не формируется при запуске команд <em>jacoco:test</em> или <em>jacoco:cover</em>.
+Проблема решается также просто:</p>
+
+<ul>
+  <li>Необходимо добавить в зависимости проекта библиотеку <em>junit-interface</em>. Эта же библиотека используется для генерации отчетов xUnit в PlayFramework</li>
+</ul>
+
+<div class="highlight"><pre><code class="scala">    <span class="k">val</span> <span class="n">junitInterface</span> <span class="k">=</span> <span class="s">&quot;com.novocode&quot;</span> <span class="o">%</span> <span class="s">&quot;junit-interface&quot;</span> <span class="o">%</span> <span class="s">&quot;0.10&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+    <span class="c1">// Add to play project dependencies config</span>
+    <span class="n">appDependencies</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">junitInterface</span><span class="o">)</span>
+</code></pre></div>
+
+<ul>
+  <li>Необходимо добавить ключ в конфигурацию сборки в <em>Build.scala</em>:</li>
+</ul>
+
+<div class="highlight"><pre><code class="scala">    <span class="n">testOptions</span> <span class="n">in</span> <span class="n">jacoco</span><span class="o">.</span><span class="nc">Config</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="s">&quot;junitxml&quot;</span><span class="o">,</span> <span class="s">&quot;console&quot;</span><span class="o">)</span>
+</code></pre></div>
+
+<p>После перезагрузки описания проекта при выполнении команд <em>jacoco:test</em> или <em>jacoco:cover</em> Вы получите отчета в папке <em>$PROJECT/target/test-reports</em>.</p>
+
+<h3 id="section">Ссылки</h3>
+
+<p><a href="https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin">xUnit plugin</a>
+<a href="https://github.com/sbt/junit-interface">jUnit interface</a></p>
 
     </div>
 

@@ -4,7 +4,7 @@
  <title>EIS Development Team Blog</title>
  <link href="/" rel="self"/>
  <link href=""/>
- <updated>2014-07-21T17:07:57+04:00</updated>
+ <updated>2014-07-21T17:40:43+04:00</updated>
  <id></id>
  <author>
    <name>EIS devteam</name>
@@ -18,6 +18,55 @@
    <updated>2014-07-21T00:00:00+04:00</updated>
    <id>/code%20quality/2014/07/21/xunit-test-reports</id>
    <content type="html">
+&lt;h2 id=&quot;xunit&quot;&gt;Отчеты о прохождении тестов в формате xUnit&lt;/h2&gt;
+
+&lt;h3 id=&quot;jenkins&quot;&gt;Отчеты и Jenkins&lt;/h3&gt;
+
+&lt;p&gt;Для Jenkins существует &lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;плагин&lt;/a&gt;, разбирающий отчеты в формает xUnit. XML-отчет преобразуется в таблицу соответствия тестов и результатов.
+Кроме того плагин позволяет отследить динамику прохождения тестов и их количества в виде графиков и таблицы на странице задачи Jenkins (сколько тестов добавлено в последней сборке, сколько тестов сломалось за последний месяц,…).
+Визуализация отчетов позволяет быстрее локализовать место возможной ошибки и исправить ее (или тест).&lt;/p&gt;
+
+&lt;h3 id=&quot;xunit--playframework&quot;&gt;xUnit и PlayFramework&lt;/h3&gt;
+
+&lt;p&gt;К сожалению при настройках по умолчанию при прохождении тестов в PlayFramework xUnit отчет не создается, а формат отчета не совпадает с xUnit. В официальной документации на сайте информации о создании подобных отчетов нет.&lt;/p&gt;
+
+&lt;p&gt;Однако, в действительности, отчет в формате xUnit создать можно. Как оказалось эта возможность заложена в sbt.
+Для создания отчетов необходимо добавить следующий ключ в скрипт сборки в &lt;em&gt;Build.scala&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;testOptions in Test += Tests.Argument(&quot;junitxml&quot;, &quot;console&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;При следующем выполнении команды &lt;em&gt;sbt test&lt;/em&gt; будет создан файл отчета в папке &lt;em&gt;$PROJECT/target/test-reports&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Остается установить плагин для Jenkins и добавть послесборочный шаг публикации отчетов JUnit.&lt;/p&gt;
+
+&lt;h3 id=&quot;xunit--jacoco&quot;&gt;xUnit и Jacoco&lt;/h3&gt;
+
+&lt;p&gt;Если Вы используете jacoco4sbt для сборки статистики покрытия тестов, то обнаружите, что XML отчет не формируется при запуске команд &lt;em&gt;jacoco:test&lt;/em&gt; или &lt;em&gt;jacoco:cover&lt;/em&gt;.
+Проблема решается также просто:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Необходимо добавить в зависимости проекта библиотеку &lt;em&gt;junit-interface&lt;/em&gt;. Эта же библиотека используется для генерации отчетов xUnit в PlayFramework&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;scala&quot;&gt;    &lt;span class=&quot;k&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;junitInterface&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;com.novocode&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;junit-interface&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;0.10&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;test&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Add to play project dependencies config&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;appDependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;junitInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Необходимо добавить ключ в конфигурацию сборки в &lt;em&gt;Build.scala&lt;/em&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;scala&quot;&gt;    &lt;span class=&quot;n&quot;&gt;testOptions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jacoco&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Tests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Argument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;junitxml&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;console&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;После перезагрузки описания проекта при выполнении команд &lt;em&gt;jacoco:test&lt;/em&gt; или &lt;em&gt;jacoco:cover&lt;/em&gt; Вы получите отчета в папке &lt;em&gt;$PROJECT/target/test-reports&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;Ссылки&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;xUnit plugin&lt;/a&gt;
+&lt;a href=&quot;https://github.com/sbt/junit-interface&quot;&gt;jUnit interface&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  
