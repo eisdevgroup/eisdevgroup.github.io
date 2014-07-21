@@ -4,13 +4,22 @@
  <title>EIS Development Team Blog</title>
  <link href="/" rel="self"/>
  <link href=""/>
- <updated>2014-07-21T17:04:07+04:00</updated>
+ <updated>2014-07-21T17:07:57+04:00</updated>
  <id></id>
  <author>
    <name>EIS devteam</name>
    <email>devteam.eis@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>xUnit test reports for sbt</title>
+   <link href="/code%20quality/2014/07/21/xunit-test-reports"/>
+   <updated>2014-07-21T00:00:00+04:00</updated>
+   <id>/code%20quality/2014/07/21/xunit-test-reports</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>AzureJay</title>

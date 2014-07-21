@@ -5,10 +5,19 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-07-21T17:04:07+04:00</lastBuildDate>
-        <pubDate>2014-07-21T17:04:07+04:00</pubDate>
+        <lastBuildDate>2014-07-21T17:07:57+04:00</lastBuildDate>
+        <pubDate>2014-07-21T17:07:57+04:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>xUnit test reports for sbt</title>
+                <description>
+</description>
+                <link>/code%20quality/2014/07/21/xunit-test-reports</link>
+                <guid>/code%20quality/2014/07/21/xunit-test-reports</guid>
+                <pubDate>2014-07-21T00:00:00+04:00</pubDate>
+        </item>
 
         <item>
                 <title>AzureJay</title>

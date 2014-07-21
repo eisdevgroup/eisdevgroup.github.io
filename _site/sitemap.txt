@@ -9,6 +9,7 @@
 /index.html
 /categories.html
 
+/code%20quality/2014/07/21/xunit-test-reports
 /play%20framework/2014/07/04/azurejay
 /play%20framework/2014/06/17/play-with-pjax
 /code%20quality/2014/05/16/code-quality-tools-in-scala-projects
