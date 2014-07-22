@@ -4,7 +4,7 @@
  <title>EIS Development Team Blog</title>
  <link href="/" rel="self"/>
  <link href=""/>
- <updated>2014-07-21T17:40:43+04:00</updated>
+ <updated>2014-07-22T12:54:29+04:00</updated>
  <id></id>
  <author>
    <name>EIS devteam</name>
@@ -65,8 +65,9 @@
 
 &lt;h3 id=&quot;section&quot;&gt;Ссылки&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;xUnit plugin&lt;/a&gt;
-&lt;a href=&quot;https://github.com/sbt/junit-interface&quot;&gt;jUnit interface&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;xUnit plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/sbt/junit-interface&quot;&gt;jUnit interface&lt;/a&gt;&lt;/p&gt;
 </content>
  </entry>
  

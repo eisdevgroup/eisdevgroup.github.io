@@ -5,8 +5,8 @@
         <description>EIS Development Team Blog - EIS devteam</description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-07-21T17:40:43+04:00</lastBuildDate>
-        <pubDate>2014-07-21T17:40:43+04:00</pubDate>
+        <lastBuildDate>2014-07-22T12:54:29+04:00</lastBuildDate>
+        <pubDate>2014-07-22T12:54:29+04:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -60,8 +60,9 @@
 
 &lt;h3 id=&quot;section&quot;&gt;Ссылки&lt;/h3&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;xUnit plugin&lt;/a&gt;
-&lt;a href=&quot;https://github.com/sbt/junit-interface&quot;&gt;jUnit interface&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://wiki.jenkins-ci.org/display/JENKINS/xUnit+Plugin&quot;&gt;xUnit plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/sbt/junit-interface&quot;&gt;jUnit interface&lt;/a&gt;&lt;/p&gt;
 </description>
                 <link>/code%20quality/2014/07/21/xunit-test-reports</link>
                 <guid>/code%20quality/2014/07/21/xunit-test-reports</guid>
