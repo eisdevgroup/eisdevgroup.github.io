@@ -102,6 +102,7 @@ Yeoman выполняет грязную работу по созданию ша
 
 ### Ссылки
 
+* [Полный файл конфигурации проекта](https://gist.github.com/Axblade/1b1d4d9e79df1cee7dfc)
 * [Grunt](http://gruntjs.com/)
 * [Bower](http://bower.io/)
 * [Yeoman](http://yeoman.io/)
