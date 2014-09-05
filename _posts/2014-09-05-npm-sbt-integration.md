@@ -67,6 +67,7 @@ Yeoman выполняет грязную работу по созданию ша
     }
 
 Объекты CustomTasks и GruntTasks определяют набор задач (команд для исполнения в командной строке) для интеграции в интерактивную командную строку SBT.
+Таким же методом можно добавить любые другие команды в sbt.
 
 Теперь необходимо добавить команды в конфигурациюю проекта:
 
@@ -77,3 +78,26 @@ Yeoman выполняет грязную работу по созданию ша
     )
 
 После перезапуска командной строки, команды вида *sbt npm update* будут доступны.
+
+### Запуск задачи Grunt при сборке проекта
+
+Для постоянной пересборки элементов, которыми управляет Grunt, необходимо добавить исполнение команды во время компиляции приложений.
+Для этого необходимо добавить следующее в файл сборки:
+
+      // Grunt task to run on "sbt run"
+      val gruntDefault = TaskKey[Unit]("grunt default")
+      val gruntSettings = gruntDefault := GruntTasks.`grunt:default`
+
+      val main = Project(appName, file(".")).enablePlugins(play.PlayScala).settings(
+        // other configuration go here
+        playRunHooks <+= baseDirectory.map(base => Grunt(base)),
+        compile in Compile <<= (compile in Compile).dependsOn(gruntDefault)
+      )
+
+После перезагрузки проекта, при вызове команд _sbt run_ или _sbt compile_ будет вызываться процесс Grunt.
+
+### Ссылки
+
+* [Grunt](http://gruntjs.com/)
+* [Bower](http://bower.io/)
+* [Yeoman](http://yeoman.io/)
